@@ -124,20 +124,23 @@ def compute_tf(doc: Document, doc_freqs: Dict[str, int], weights: list):
     for word in doc.abstract:
         vec[word] += weights.abstract
     # print('dictionary vec: ',dict(vec))
+    # input()
     return dict(vec)  # convert back to a regular dict
 
 def compute_tfidf(doc, doc_freqs, weights):
     vec = defaultdict(float)
     n = len(read_docs('cacm.raw'))
+    # print('n :', n)
     tf = compute_tf(doc, doc_freqs, weights)
     for i in tf:
         # j = tf[i]
         if i in doc_freqs:
-            # df = doc_freqs[i]
-            vec[i] = i.get()  * np.log(n / doc_freqs.get())
+            vec[i] = tf.get(i)  * np.log(n / doc_freqs.get(i))
+            # print('vec for doc', vec[i])   
         else:
             vec[i] = 0
-    print('dictionary vec: ',dict(vec))
+            # print('vec for 0:', vec[i])   
+    # print('dictionary vec: ',dict(vec))
     return dict(vec)  # TODO: implement
 
 def compute_boolean(doc, doc_freqs, weights):
@@ -341,8 +344,8 @@ def experiment():
 
     term_funcs = {
         'tf': compute_tf,
-        'tfidf': compute_tfidf,
-        'boolean': compute_boolean
+        'boolean': compute_boolean,
+        # 'tfidf': compute_tfidf,
     }
 
     sim_funcs = {
@@ -367,7 +370,7 @@ def experiment():
     # This loop goes through all permutations. You might want to test with specific permutations first
     for term, stem, removestop, sim, term_weights in itertools.product(*permutations):
 
-        print(sim)
+        # print(sim)
 
         processed_docs, processed_queries = process_docs_and_queries(docs, queries, stem, removestop, stopwords)
         doc_freqs = compute_doc_freqs(processed_docs)
