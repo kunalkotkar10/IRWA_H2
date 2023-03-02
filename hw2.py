@@ -129,18 +129,30 @@ def compute_tf(doc: Document, doc_freqs: Dict[str, int], weights: list):
 
 def compute_tfidf(doc, doc_freqs, weights):
     vec = defaultdict(float)
-    n = len(read_docs('cacm.raw'))
+    # n = len(read_docs('cacm.raw'))
     # print('n :', n)
     tf = compute_tf(doc, doc_freqs, weights)
+    idf = tf
+    # print(idf)
+    # input()
     for i in tf:
-        # j = tf[i]
-        if i in doc_freqs:
-            vec[i] = tf.get(i)  * np.log(n / doc_freqs.get(i))
-            # print('vec for doc', vec[i])   
+        val = tf[i]
+        # print(val)
+        if doc_freqs[i] != 0:
+            idf[i] = val/doc_freqs[i]
         else:
-            vec[i] = 0
-            # print('vec for 0:', vec[i])   
-    # print('dictionary vec: ',dict(vec))
+            idf[i] = 0
+    # print(idf)
+    # input()
+    # for i in tf:
+    #     # j = tf[i]
+    #     if i in doc_freqs:
+    #         vec[i] = tf[i]  * ( 1 / (doc_freqs[i]))
+    #         # print('vec for doc', vec[i])   
+    #     else:
+    #         vec[i] = 0
+    #         # print('vec for 0:', vec[i])   
+    # # print('dictionary vec: ',dict(vec))
     return dict(vec)  # TODO: implement
 
 def compute_boolean(doc, doc_freqs, weights):
@@ -344,8 +356,9 @@ def experiment():
 
     term_funcs = {
         'tf': compute_tf,
+        'tfidf': compute_tfidf,
         'boolean': compute_boolean,
-        # 'tfidf': compute_tfidf,
+        
     }
 
     sim_funcs = {
