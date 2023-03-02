@@ -354,6 +354,23 @@ def experiment():
     rels = read_rels('query.rels')
     stopwords = read_stopwords('common_words')
 
+    print(type(docs))
+    print(type(rels))
+    input()
+
+    seldoc = []
+    seldoc.append(docs[5])
+    seldoc.append(docs[8])
+    seldoc.append(docs[21])
+    print(seldoc[0])
+
+    selq = []
+    selq.append(queries[5])
+    selq.append(queries[8])
+    selq.append(queries[21])
+    print(selq[0])
+    input()
+
     term_funcs = {
         'tf': compute_tf,
         'tfidf': compute_tfidf,
@@ -412,7 +429,7 @@ def experiment():
             for i in range(len(metrics[0]))]
         print(term, stem, removestop, sim, ','.join(map(str, term_weights)), *averages, sep='\t')
 
-        # return  # TODO: just for testing; remove this when printing the full table
+        return  # TODO: just for testing; remove this when printing the full table
 
 
 def process_docs_and_queries(docs, queries, stem, removestop, stopwords):

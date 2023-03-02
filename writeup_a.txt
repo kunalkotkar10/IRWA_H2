@@ -1,0 +1,13 @@
+Analysing the results observed in ‘output.tsv’ provides us with an analytical answer as to which permutations gave the best results and which permutations gave the worst. While I went with the assumption that cosine similarity might provide the best results prior to the experiment, it was actually ‘overlap’ which gave the best overall results. The second best results were provided by cosine similarity. Jaccard similarity gave the worst results out of all the four similarities.
+
+Overlap calculates the ratio of the number of shared terms between two documents over all the terms in both documents. Whereas jaccard simply calculates the intersection of two documents to its union. Dice is very similar to jaccard with just slightly more sensitivity, hence, it was no surprise that its results were only slightly better than Jaccard.
+
+The overall results of permutations which included tf and permutations which included boolean were pretty close. I also observed that Tfidf gave the best results and by quite a big margin.
+
+Tfidf is already known to be a powerful choice when working with large documents when compared to tf and boolean, hence, it was no surprise that its permutations gave largely better results than the others in this experiment. Boolean is the most efficient when working with a small amount of documents as it is relatively faster than tf idf.
+
+The permutations which gave the worst results all did not remove stopwords nor performed stemming. It was exactly opposite for permutations which gave the best results. Considering the outputs, I tried to find the permutations which gave the best and worst results considering each individual parameters - precision at 0.25, at 0.5, at 0.75, at 1.0, mean_precision 1 & 2 as well as precsion_normalization and recall_normalization.
+
+As expected, the permutation which included tf idf and overlap produced the maximum accuracy throughout the entire results. Precisely, the permutation of tf idf, overlap, removed_stopwords and stemming, and term weights of 1,3,4,1 gave the highest precision_normalization, recall_normalization, as well as almost all the other accuracy measures. The permutations of tf, jaccard and term weights 1,1,1,4 gave the worst precision_normalisation and recall_normalisation.
+
+To conclude, it provided me with an idea that while document retrieval, it will be most beneficial to choose the combination of tf idf, overlap, removing the stopwords and perform stemming to achieve the best results possible. 
